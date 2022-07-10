@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  SectionList,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, SectionList, TouchableOpacity } from "react-native";
 
 import styles from "./Home.style";
 import client from "../../utils/apolloClient";
