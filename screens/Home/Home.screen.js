@@ -20,8 +20,10 @@ const Home = () => {
   const [searchTerm, setSearChTerm] = useState("");
   const [filter, setFilter] = useState("");
   const [paginate, setpaginate] = useState(2);
+  const [loading, setLoading] = useState(false);
 
-  const fetchTransactions = async () => {
+  const fetchInitialCountries = async () => {
+    setLoading(true);
     const query = gql`
       {
         countries {
@@ -37,10 +39,30 @@ const Home = () => {
     `;
     const { data } = await client.query({ query });
     setCountries(data.countries);
+    setLoading(false);
+  };
+
+  const fetchNextCountries = async (after) => {
+    const query = gql`
+      {
+        countries(after: "${after}") {
+          id
+          name
+          population
+          region
+          capital
+          imgurl
+          date
+        }
+      }
+    `;
+    const { data } = await client.query({ query });
+    let newCountries = [...countries, ...data.countries];
+    setCountries(newCountries);
   };
 
   useEffect(() => {
-    fetchTransactions();
+    fetchInitialCountries();
   }, []);
 
   const data = Object.values(countries);
@@ -88,14 +110,19 @@ const Home = () => {
       <Search onChangeText={(text) => setSearChTerm(text.toLowerCase())} />
       <Filter items={filter_items} onPress={changeFilter} />
       {filter.length > 0 && (
-        <TouchableOpacity onPress={() => setFilter("")}>
-          <Text style={styles.clearFilter}>Clear filter</Text>
+        <TouchableOpacity
+          style={styles.clearFilter}
+          onPress={() => setFilter("")}
+        >
+          <Text style={{ color: "#ee5253", fontWeight: "bold" }}>
+            Clear filter
+          </Text>
         </TouchableOpacity>
       )}
       <SectionList
         showsVerticalScrollIndicator={false}
         style={styles.sectionList}
-        sections={organizer(search(countries)).slice(0, paginate)}
+        sections={organizer(search(countries))}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => <Item item={item} />}
         renderSectionHeader={({ section: { title } }) => (
@@ -103,8 +130,16 @@ const Home = () => {
             {new Date(title).toLocaleDateString().replace(/\//g, "-")}
           </Text>
         )}
-        ListEmptyComponent={<ActivityIndicator size={32} color="indigo" />}
-        onEndReached={load_more}
+        ListEmptyComponent={
+          !loading && (
+            <Text style={styles.noItemsFoundText}>oops, no items found...</Text>
+          )
+        }
+        onEndReached={() =>
+          fetchNextCountries(countries[countries.length - 1].id)
+        }
+        onRefresh={() => fetchInitialCountries()}
+        refreshing={loading}
       />
     </View>
   );

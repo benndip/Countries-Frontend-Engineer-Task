@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginVertical: 20,
   },
-  statusContainer: {
+  itemContainer: {
     width: 100,
     height: "100%",
     borderWidth: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#2d3436",
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 10,

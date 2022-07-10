@@ -16,7 +16,7 @@ const Filter = ({ items, onPress }) => {
         <TouchableOpacity
           onPress={() => changeFilter(item)}
           key={index}
-          style={styles.statusContainer}
+          style={styles.itemContainer}
         >
           <Text style={styles.statusText}>{item}</Text>
         </TouchableOpacity>

@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 16,
-    backgroundColor: "#fff",
     fontWeight: "bold",
     color: "#5f27cd",
   },
@@ -29,11 +28,18 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   clearFilter: {
-    color: "blue",
     position: "absolute",
     zIndex: 9999,
-    top: -(height * 0.1),
+    top: height * 0.2,
     right: 10,
+    height: 30,
+    width: 80,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noItemsFoundText: {
+    alignSelf: "center",
+    fontSize: 22,
   },
 });
 
