@@ -19,8 +19,8 @@ const Home = () => {
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearChTerm] = useState("");
   const [filter, setFilter] = useState("");
-  const [paginate, setpaginate] = useState(2);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const fetchInitialCountries = async () => {
     setLoading(true);
@@ -42,7 +42,9 @@ const Home = () => {
     setLoading(false);
   };
 
+  // Takes care of pagination
   const fetchNextCountries = async (after) => {
+    setLoadingMore(true);
     const query = gql`
       {
         countries(after: "${after}") {
@@ -57,8 +59,8 @@ const Home = () => {
       }
     `;
     const { data } = await client.query({ query });
-    let newCountries = [...countries, ...data.countries];
-    setCountries(newCountries);
+    setCountries((prev) => [...prev, ...data.countries]);
+    setLoadingMore(false);
   };
 
   useEffect(() => {
@@ -79,11 +81,6 @@ const Home = () => {
           item[parameter].toString().toLowerCase().includes(searchTerm)
         )
     );
-  };
-
-  // Takes care of pagination
-  const load_more = (event) => {
-    setpaginate((prevValue) => prevValue + 8);
   };
 
   const changeFilter = (item) => {
@@ -135,12 +132,13 @@ const Home = () => {
             <Text style={styles.noItemsFoundText}>oops, no items found...</Text>
           )
         }
-        onEndReached={() =>
-          fetchNextCountries(countries[countries.length - 1].id)
+        onEndReached={
+          () => fetchNextCountries(countries[countries.length - 1].id) //pagination initiated here.
         }
         onRefresh={() => fetchInitialCountries()}
         refreshing={loading}
       />
+      {loadingMore && <Text style={styles.loadingMore}>Loading more...</Text>}
     </View>
   );
 };

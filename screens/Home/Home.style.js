@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
   },
+  loadingMore: {
+    fontWeight: "bold",
+    marginVertical: 10,
+    marginLeft: 10,
+  },
 });
 
 export default styles;
