@@ -104,6 +104,7 @@ const Home = () => {
           </Text>
         )}
         ListEmptyComponent={<ActivityIndicator size={32} color="indigo" />}
+        onEndReached={load_more}
       />
     </View>
   );

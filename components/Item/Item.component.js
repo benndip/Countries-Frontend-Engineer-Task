@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
+import NumberFormat from "react-number-format";
 
 import styles from "./Item.style";
 
@@ -12,7 +13,15 @@ const Item = ({ item }) => {
       </View>
       <View style={styles.dataContainer}>
         <Text style={styles.name}>{name}</Text>
-        <Text>Population: {population}</Text>
+        <Text>
+          Population:{" "}
+          <NumberFormat
+            value={population}
+            displayType={"text"}
+            thousandSeparator={true}
+            renderText={(value, props) => <Text {...props}>{value}</Text>}
+          />
+        </Text>
         <Text>Region: {region}</Text>
         <Text>Capital: {capital}</Text>
       </View>
