@@ -5,15 +5,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    marginVertical: 25,
+    marginVertical: 10,
   },
-  statusContainer: {
-    width: "25%",
-    borderWidth: 1,
+  imageContainer: {
+    width: "20%",
+    height: 60,
+    overflow: "hidden",
   },
   dataContainer: {
     width: "70%",
-    borderWidth: 1,
+    borderWidth: 0.4,
+    padding: 5,
+    borderRadius: 6,
+    borderColor: "#ccc",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  name: {
+    fontWeight: "bold",
+    fontSize: 18,
+    opacity: 0.7,
   },
 });
 

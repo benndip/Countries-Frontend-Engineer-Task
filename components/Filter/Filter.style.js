@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   container: {
     height: 50,
     borderWidth: 1,
-    alignSelf: "center",
     paddingLeft: 10,
     marginVertical: 20,
   },
@@ -20,6 +19,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: "#ffffff",
+    fontSize: 16,
   },
 });
 

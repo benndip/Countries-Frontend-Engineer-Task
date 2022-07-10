@@ -3,18 +3,22 @@ import React from "react";
 
 import styles from "./Filter.style";
 
-const statuses = ["Successful", "Failed", "Pending", "Canceled"];
+const Filter = ({ items, onPress }) => {
+  const changeFilter = (item) => onPress(item);
 
-const Filter = () => {
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
     >
-      {statuses.map((status, index) => (
-        <TouchableOpacity key={index} style={styles.statusContainer}>
-          <Text style={styles.statusText}>{status}</Text>
+      {items.map((item, index) => (
+        <TouchableOpacity
+          onPress={() => changeFilter(item)}
+          key={index}
+          style={styles.statusContainer}
+        >
+          <Text style={styles.statusText}>{item}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
